@@ -69,6 +69,10 @@ public class FoxHoundUtils {
             }
         }
 
+
+
+
+        
         else if (fh == 'F') {
             if (before.equals(players[players.length - 1])) {
                 return checkMoves(before, after) && (searchKey(allKeys, after) > -1)
