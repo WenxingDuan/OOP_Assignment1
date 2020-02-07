@@ -69,13 +69,11 @@ public class FoxHoundUtils {
             }
         }
 
-
-
-        
         else if (fh == 'F') {
             if (before.equals(players[players.length - 1])) {
                 return checkMoves(before, after) && (searchKey(allKeys, after) > -1)
-                        && (searchKey(Arrays.copyOf(players, players.length - 1), after) < 0);
+                        && (searchKey(Arrays.copyOf(players, players.length - 1), after) < 0)
+                        && !(searchKeyNum(players, after) == 1);
 
             } else {
                 // System.out.println("listPosition");
@@ -99,6 +97,21 @@ public class FoxHoundUtils {
         } else {
             return false;
         }
+    }
+
+    public static boolean isHoundWin(String[] players, int dim) {
+        return isValidMove(dim, players, 'F', players[players.length - 1],
+                "" + players[0] + String.valueOf(Integer.parseInt(String.valueOf(players[1])) + 1))
+                && isValidMove(dim, players, 'F', players[players.length - 1],
+                        "" + players[0] + String.valueOf(Integer.parseInt(String.valueOf(players[1])) - 1))
+                && isValidMove(dim, players, 'F', players[players.length + 1],
+                        "" + players[0] + String.valueOf(Integer.parseInt(String.valueOf(players[1])) + 1))
+                && isValidMove(dim, players, 'F', players[players.length + 1],
+                        "" + players[0] + String.valueOf(Integer.parseInt(String.valueOf(players[1])) - 1));
+    }
+
+    public static boolean isFoxWin(String foxPosition) {
+        return foxPosition.charAt(1) == '1';
     }
 
     public static int searchKeyNum(String[] keys, String key) {
