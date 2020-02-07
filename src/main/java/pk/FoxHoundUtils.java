@@ -32,6 +32,7 @@ public class FoxHoundUtils {
         String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         int length = (dimension / 2) + 1;
         // System.out.println(length);
+
         String[] positions = new String[length];
         int listPosition = 0;
         for (int i = 1; i < dimension; i = i + 2) {
@@ -100,14 +101,32 @@ public class FoxHoundUtils {
     }
 
     public static boolean isHoundWin(String[] players, int dim) {
-        return isValidMove(dim, players, 'F', players[players.length - 1],
-                "" + players[0] + String.valueOf(Integer.parseInt(String.valueOf(players[1])) + 1))
-                && isValidMove(dim, players, 'F', players[players.length - 1],
-                        "" + players[0] + String.valueOf(Integer.parseInt(String.valueOf(players[1])) - 1))
-                && isValidMove(dim, players, 'F', players[players.length + 1],
-                        "" + players[0] + String.valueOf(Integer.parseInt(String.valueOf(players[1])) + 1))
-                && isValidMove(dim, players, 'F', players[players.length + 1],
-                        "" + players[0] + String.valueOf(Integer.parseInt(String.valueOf(players[1])) - 1));
+        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        String[] allKeys = new String[dim * dim];
+        int allKeysPos = 0;
+        for (int i = 0; i < dim; i++) {
+            for (int j = 1; j < dim + 1; j++) {
+                allKeys[allKeysPos] = alphabet.charAt(i) + String.valueOf(j);
+                allKeysPos++;
+            }
+        }
+        String[] rightMoves = new String[4];
+        int index = 0;
+        for (String key : allKeys) {
+
+            if (checkMoves(players[players.length - 1], key)) {
+                rightMoves[index] = key;
+                index++;
+            }
+
+        }
+        boolean flag = false;
+        for (String key : rightMoves) {
+            flag = flag || isValidMove(dim, players, 'F', players[players.length - 1], key);
+
+        }
+        return !flag;
     }
 
     public static boolean isFoxWin(String foxPosition) {
