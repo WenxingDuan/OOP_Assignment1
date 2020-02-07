@@ -27,8 +27,8 @@ public class FoxHoundUI {
         String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         String[] keyboard = new String[dim];
 
-        keyboard[0] = " " + alphabet.substring(0, dim - 2) + " ";
-        keyboard[dim - 1] = " " + alphabet.substring(0, dim - 2) + " ";
+        keyboard[0] = "  " + alphabet.substring(0, dim - 2) + "  ";
+        keyboard[dim - 1] = "  " + alphabet.substring(0, dim - 2) + "  ";
         for (int i = 1; i < dim - 1; i++) {
             keyboard[i] = new String();
             for (int j = 0; j < dim - 2; j++) {
@@ -53,9 +53,9 @@ public class FoxHoundUI {
             if (i == 0 || i == keyboard.length - 1) {
                 System.out.println(keyboard[i]);
             } else {
-                System.out.print(i);
+                System.out.print(i + " ");
                 System.out.print(keyboard[i]);
-                System.out.println(i);
+                System.out.println(" " + i);
             }
         }
     }
@@ -115,8 +115,8 @@ public class FoxHoundUI {
             System.out.println("Provide origin and destination coordinates.");
             System.out.println("Enter two positions between" + allKeys[0] + allKeys[allKeys.length - 1]);
             String key = stdin.nextLine() + "thisIsForErrorHanding";
-            String before = key.substring(0,2);
-            String after = key.substring(3,5);
+            String before = key.substring(0, 2);
+            String after = key.substring(3, 5);
             if ((Arrays.binarySearch(allKeys, before) > -1) && (Arrays.binarySearch(allKeys, after) > -1)) {
                 String[] returnValues = new String[2];
                 returnValues[0] = before;
