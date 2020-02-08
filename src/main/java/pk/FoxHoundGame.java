@@ -51,6 +51,10 @@ public class FoxHoundGame {
         // start each game with the Fox
         char turn = FoxHoundUtils.FOX_FIELD;
         boolean exit = false;
+        //------------------------------
+        String[] testPlayers = { "C6", "D1", "F1", "H1", "B7" };
+        players = testPlayers;
+        //------------------------------
         while (!exit) {
             System.out.println("\n#################################");
             FoxHoundUI.displayBoard(players, dim);
@@ -72,6 +76,14 @@ public class FoxHoundGame {
                     }
                 }
                 turn = swapPlayers(turn);
+                if (FoxHoundUtils.isFoxWin(players[players.length - 1])) {
+                    System.out.println("The Fox wins!");
+                    exit = true;
+                }
+                if (FoxHoundUtils.isHoundWin(players, dim)) {
+                    System.out.println("The Hound wins!");
+                    exit = true;
+                }
                 break;
             case FoxHoundUI.MENU_EXIT:
                 exit = true;

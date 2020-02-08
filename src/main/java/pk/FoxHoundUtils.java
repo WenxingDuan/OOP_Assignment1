@@ -127,6 +127,13 @@ public class FoxHoundUtils {
             }
 
         }
+
+        for (int i = 0; i < rightMoves.length; i++) {
+            if (rightMoves[i] == null) {
+                rightMoves[i] = "00";
+            }
+
+        }
         boolean flag = false;
         for (String key : rightMoves) {
             flag = flag || isValidMove(dim, players, 'F', players[players.length - 1], key);
