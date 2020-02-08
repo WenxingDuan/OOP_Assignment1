@@ -113,7 +113,7 @@ public class FoxHoundUI {
 
         while (true) {
             System.out.println("Provide origin and destination coordinates.");
-            System.out.println("Enter two positions between " + allKeys[0] +"-"+ allKeys[allKeys.length - 1]+":");
+            System.out.println("Enter two positions between " + allKeys[0] + "-" + allKeys[allKeys.length - 1] + ":\n");
             String key = stdin.nextLine() + "thisIsForErrorHanding";
             String before = key.substring(0, 2);
             String after = key.substring(3, 5);
@@ -123,7 +123,7 @@ public class FoxHoundUI {
                 returnValues[1] = after;
                 return returnValues;
             } else {
-                System.out.println("");
+                System.err.println("ERROR: Please enter valid coordinate pair separated by space.");
             }
         }
 
