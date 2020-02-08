@@ -30,6 +30,9 @@ public class FoxHoundUtils {
     public static String[] initialisePositions(int dimension) {
 
         String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        if (dimension < 0) {
+            throw new IllegalArgumentException("");
+        }
         int length = (dimension / 2) + 1;
         // System.out.println(length);
 
@@ -101,6 +104,9 @@ public class FoxHoundUtils {
     }
 
     public static boolean isHoundWin(String[] players, int dim) {
+        if (dim < 0) {
+            throw new IllegalArgumentException("");
+        }
         String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
         String[] allKeys = new String[dim * dim];
