@@ -4,6 +4,12 @@ import java.util.Scanner;
 import java.util.Objects;
 import java.util.Arrays;
 
+import java.io.File;
+import java.io.UncheckedIOException;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 /**
  * A utility class for the fox hound program.
  * 
@@ -15,12 +21,14 @@ public class FoxHoundUI {
     /** Number of main menu entries. */
     private static final int MENU_ENTRIES = 2;
     /** Main menu display string. */
-    private static final String MAIN_MENU = "\n1. Move\n2. Exit\n\nEnter 1 - 2:";
+    private static final String MAIN_MENU = "\n1. Move\n2. Exit\n3. Save\n4. Load\n\nEnter 1 - 2:";
 
     /** Menu entry to select a move action. */
     public static final int MENU_MOVE = 1;
     /** Menu entry to terminate the program. */
     public static final int MENU_EXIT = 2;
+    public static final int MENU_SAVE = 3;
+    public static final int MENU_LOAD = 4;
 
     public static void displayBoard(String[] players, int dim) {
         dim = dim + 2;
@@ -127,5 +135,9 @@ public class FoxHoundUI {
             }
         }
 
+    }
+
+    public static Path fileQuery (Scanner stdin){
+        return null;
     }
 }

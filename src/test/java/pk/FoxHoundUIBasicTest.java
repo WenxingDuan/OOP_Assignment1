@@ -200,7 +200,7 @@ public class FoxHoundUIBasicTest {
 
     // ------------------------- fileQuery --------------------
 
-    /*
+
 
     private void checkFileQueryOutput(String expectedStdOut, String expectedStdErr, String inputLine) {
         Scanner TEST_IN = new Scanner(new ByteArrayInputStream(inputLine.getBytes()));
@@ -245,5 +245,4 @@ public class FoxHoundUIBasicTest {
         assertEquals("Resulting path not as expected.", expected, result.toString());
     }
 
-    */
 }

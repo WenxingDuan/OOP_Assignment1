@@ -51,10 +51,10 @@ public class FoxHoundGame {
         // start each game with the Fox
         char turn = FoxHoundUtils.FOX_FIELD;
         boolean exit = false;
-        //------------------------------
+        // ------------------------------
         String[] testPlayers = { "C6", "D1", "F1", "H1", "B7" };
         players = testPlayers;
-        //------------------------------
+        // ------------------------------
         while (!exit) {
             System.out.println("\n#################################");
             FoxHoundUI.displayBoard(players, dim);
@@ -88,11 +88,19 @@ public class FoxHoundGame {
             case FoxHoundUI.MENU_EXIT:
                 exit = true;
                 break;
+
+            case FoxHoundUI.MENU_SAVE:
+
+            case FoxHoundUI.MENU_LOAD:
+
             default:
                 System.err.println("ERROR: invalid menu choice: " + choice);
             }
         }
     }
+
+
+
 
     /**
      * Entry method for the Fox and Hound game.
