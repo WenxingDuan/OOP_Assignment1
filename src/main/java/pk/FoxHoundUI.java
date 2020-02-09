@@ -21,7 +21,7 @@ public class FoxHoundUI {
     /** Number of main menu entries. */
     private static final int MENU_ENTRIES = 2;
     /** Main menu display string. */
-    private static final String MAIN_MENU = "\n1. Move\n2. Exit\n3. Save\n4. Load\n\nEnter 1 - 2:";
+    private static final String MAIN_MENU = "\n1. Move\n2. Exit\n3. Save\n4. Load\n\nEnter 1 - 4:";
 
     /** Menu entry to select a move action. */
     public static final int MENU_MOVE = 1;
@@ -137,7 +137,11 @@ public class FoxHoundUI {
 
     }
 
-    public static Path fileQuery (Scanner stdin){
-        return null;
+    public static Path fileQuery(Scanner stdin) {
+        System.out.println("Enter file path:");
+        String path = stdin.nextLine();
+        Path thePath = Paths.get(path);
+        return thePath;
+
     }
 }
