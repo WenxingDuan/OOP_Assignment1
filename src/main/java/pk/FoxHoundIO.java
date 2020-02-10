@@ -16,7 +16,9 @@ import java.nio.file.Files;
 public class FoxHoundIO {
 
     public static Boolean saveGame(String[] player, char fh, Path path) {
-
+        if (player.length != 5) {
+            throw new IllegalArgumentException();
+        }
         String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         String[] validKeys = new String[32];
         int index = 0;
@@ -64,19 +66,26 @@ public class FoxHoundIO {
     // unfinished---------------------------------------------------------------------------
     public static char loadGame(String[] player, Path path) {
 
-        if (Files.exists(path)) {
+        if (Files.exists(path.toAbsolutePath())) {
             try {
                 byte[] bytes = Files.readAllBytes(path);
                 String text = new String(bytes);
+                player[0] = text.charAt(2) + "" + text.charAt(3);
+                player[1] = text.charAt(5) + "" + text.charAt(6);
+                player[2] = text.charAt(8) + "" + text.charAt(9);
+                player[3] = text.charAt(11) + "" + text.charAt(12);
+                player[4] = text.charAt(14) + "" + text.charAt(15);
+                return text.charAt(0);
 
             } catch (IOException e) {
                 e.printStackTrace();
+                return '#';
             }
 
         } else {
-        }
+            return '#';
 
-        return 'a';
+        }
 
     }
     // unfinished---------------------------------------------------------------------------
