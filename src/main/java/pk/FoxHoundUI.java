@@ -15,16 +15,17 @@ import java.nio.file.Paths;
 public class FoxHoundUI {
 
     /** Number of main menu entries. */
-    private static final int MENU_ENTRIES = 2;
+    private static final int MENU_ENTRIES = 4;
     /** Main menu display string. */
-    private static final String MAIN_MENU = "\n1. Move\n2. Exit\n3. Save\n4. Load\n\nEnter 1 - 4:";
+    private static final String MAIN_MENU = "\n1. Move\n2. Save\n3. Load\n4. Exit\n\nEnter 1 - 4:";
 
     /** Menu entry to select a move action. */
     public static final int MENU_MOVE = 1;
     /** Menu entry to terminate the program. */
-    public static final int MENU_EXIT = 2;
-    public static final int MENU_SAVE = 3;
-    public static final int MENU_LOAD = 4;
+
+    public static final int MENU_SAVE = 2;
+    public static final int MENU_LOAD = 3;
+    public static final int MENU_EXIT = 4;
 
     public static void displayBoard(String[] players, int dim) {
         dim = dim + 2;

@@ -2,6 +2,9 @@ package pk;
 
 //import java.util.Arrays;
 import java.util.Scanner;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Files;
 
 /**
  * The Main class of the fox hound program.
@@ -52,8 +55,8 @@ public class FoxHoundGame {
         char turn = FoxHoundUtils.FOX_FIELD;
         boolean exit = false;
         // ------------------------------
-        String[] testPlayers = { "C6", "D1", "F1", "H1", "B7" };
-        players = testPlayers;
+        // String[] testPlayers = { "C6", "D1", "F1", "H1", "B7" };
+        // players = testPlayers;
         // ------------------------------
         while (!exit) {
             System.out.println("\n#################################");
@@ -90,17 +93,31 @@ public class FoxHoundGame {
                 break;
 
             case FoxHoundUI.MENU_SAVE:
+                // Boolean saveGame(String[] player, char fh, Path path)
+                Path savePath = FoxHoundUI.fileQuery(STDIN_SCAN);
+                if (FoxHoundIO.saveGame(players, swapPlayers(turn), savePath)) {
+                    System.out.println("Save successful");
+                } else {
+                    System.out.println("Save failed");
+                }
+                break;
 
             case FoxHoundUI.MENU_LOAD:
+                Path loadPath = FoxHoundUI.fileQuery(STDIN_SCAN);
+                if (FoxHoundIO.loadGame(players, loadPath) != '#') {
+                    turn = FoxHoundIO.loadGame(players, loadPath);
+                    System.out.println("Load successful");
+                } else {
+                    System.out.println("Load failed");
+                }
+                break;
+            // char loadGame(String[] player, Path path)
 
             default:
                 System.err.println("ERROR: invalid menu choice: " + choice);
             }
         }
     }
-
-
-
 
     /**
      * Entry method for the Fox and Hound game.
