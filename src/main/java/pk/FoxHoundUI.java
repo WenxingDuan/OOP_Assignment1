@@ -6,12 +6,6 @@ import java.util.Arrays;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-/**
- * A utility class for the fox hound program.
- * 
- * It contains helper functions for all user interface related functionality
- * such as printing menus and displaying the game board.
- */
 public class FoxHoundUI {
 
     /** Number of main menu entries. */
@@ -30,16 +24,20 @@ public class FoxHoundUI {
     public static void displayBoard(String[] players, int dim) {
         dim = dim + 2;
         String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        // get all possible keyboards
         String[] keyboard = new String[dim];
-
+        // generate the keyboard with given dimension
         keyboard[0] = "  " + alphabet.substring(0, dim - 2) + "  " + "\n";
+        // first line of the keyboard
         keyboard[dim - 1] = "\n  " + alphabet.substring(0, dim - 2) + "  ";
+        // last line of the keyboard
         for (int i = 1; i < dim - 1; i++) {
             keyboard[i] = new String();
             for (int j = 0; j < dim - 2; j++) {
                 keyboard[i] = keyboard[i] + ".";
             }
         }
+        // write "." on all keyboard
 
         for (int i = 0; i < players.length; i++) {
 
@@ -52,6 +50,7 @@ public class FoxHoundUI {
             } else {
                 keyboard[row] = theNewString.replace(column, column + 1, "F").toString();
             }
+            // write F and H on the keyboard
         }
 
         for (int i = 0; i < keyboard.length; i++) {
@@ -62,18 +61,10 @@ public class FoxHoundUI {
                 System.out.print(keyboard[i]);
                 System.out.println(" " + i);
             }
+            // print the keyboard
         }
     }
 
-    /**
-     * Print the main menu and query the user for an entry selection.
-     * 
-     * @param figureToMove the figure type that has the next move
-     * @param stdin        a Scanner object to read user input from
-     * @return a number representing the menu entry selected by the user
-     * @throws IllegalArgumentException if the given figure type is invalid
-     * @throws NullPointerException     if the given Scanner is null
-     */
     public static int mainMenuQuery(char figureToMove, Scanner stdin) {
         Objects.requireNonNull(stdin, "Given Scanner must not be null");
         if (figureToMove != FoxHoundUtils.FOX_FIELD && figureToMove != FoxHoundUtils.HOUND_FIELD) {
@@ -115,11 +106,14 @@ public class FoxHoundUI {
                 allKeysPos++;
             }
         }
+        // get all possible keyboard positions
 
         while (true) {
             System.out.println("Provide origin and destination coordinates.");
             System.out.println("Enter two positions between " + allKeys[0] + "-" + allKeys[allKeys.length - 1] + ":\n");
+            // write the range of moves
             String key = stdin.nextLine() + "thisIsForErrorHanding";
+            // in case user input nothing
             String before = key.substring(0, 2);
             String after = key.substring(3, 5);
             if ((Arrays.binarySearch(allKeys, before) > -1) && (Arrays.binarySearch(allKeys, after) > -1)) {
@@ -129,6 +123,7 @@ public class FoxHoundUI {
                 return returnValues;
             } else {
                 System.err.println("ERROR: Please enter valid coordinate pair separated by space.");
+                // the input key is not on the keyboard
             }
         }
 
@@ -138,6 +133,7 @@ public class FoxHoundUI {
         System.out.println("Enter file path:");
         String path = stdin.nextLine();
         Path thePath = Paths.get(path);
+        // change the string to path
         return thePath;
 
     }

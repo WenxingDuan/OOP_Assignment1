@@ -1,17 +1,8 @@
-/**
- * A utility class for the fox hound program.
- * 
- * It contains helper functions to check the state of the game
- * board and validate board coordinates and figure positions.
- */
 package pk;
 
 import java.util.Arrays;
 
 public class FoxHoundUtils {
-
-    // ATTENTION: Changing the following given constants can
-    // negatively affect the outcome of the auto grading!
 
     /** Default dimension of the game board in case none is specified. */
     public static final int DEFAULT_DIM = 8;
@@ -25,33 +16,33 @@ public class FoxHoundUtils {
     /** Symbol to represent the fox figure. */
     public static final char FOX_FIELD = 'F';
 
-    // HINT Write your own constants here to improve code readability ...
-
     public static String[] initialisePositions(int dimension) {
 
         String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        // Used to check every part is valid
         if (dimension < 0) {
             throw new IllegalArgumentException("");
         }
+        // check negative input
+
         int length = (dimension / 2) + 1;
-        // System.out.println(length);
+        // length of players
 
         String[] positions = new String[length];
         int listPosition = 0;
         for (int i = 1; i < dimension; i = i + 2) {
             positions[listPosition] = alphabet.charAt(i) + "1";
             listPosition++;
-            // System.out.println(positions[listPosition]);
-            // System.out.println(listPosition);
         }
+        // put the hound player into the array
         positions[listPosition] = alphabet.charAt(length - 1) + "" + dimension;
-
+        // put the fox player into the array
         return positions;
     }
 
     public static boolean isValidMove(int dim, String[] players, char fh, String before, String after) {
         String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
+        // Used to check every part is valid
         String[] allKeys = new String[dim * dim];
         int allKeysPos = 0;
         for (int i = 0; i < dim; i++) {
@@ -60,13 +51,17 @@ public class FoxHoundUtils {
                 allKeysPos++;
             }
         }
-
+        // generate all possible valid move
         if (fh == 'H') {
             if (((searchKey(players, before)) > -1) && !before.equals(players[players.length - 1])) {
                 return checkMoves(before, after) && (searchKey(allKeys, after) > -1)
                         && !(searchKeyNum(players, after) == 1)
                         && (Integer.parseInt(String.valueOf(before.charAt(1))) < Integer
                                 .parseInt(String.valueOf(after.charAt(1))));
+                /*
+                 * the move must be 1. before and after are connected 2. the key is on the
+                 * keyboard 3. hound cannot move onto another hound 4. hound cannot go backwards
+                 */
 
             } else {
                 return false;
@@ -78,9 +73,12 @@ public class FoxHoundUtils {
                 return checkMoves(before, after) && (searchKey(allKeys, after) > -1)
                         && (searchKey(Arrays.copyOf(players, players.length - 1), after) < 0)
                         && !(searchKeyNum(players, after) == 1);
+                /*
+                 * the move must be 1. before and after are connected 2. the key is on the
+                 * keyboard 3. fox cannot move onto another hound
+                 */
 
             } else {
-                // System.out.println("listPosition");
                 return false;
             }
         } else {
@@ -101,6 +99,9 @@ public class FoxHoundUtils {
         } else {
             return false;
         }
+
+        // The helper function to check if the two input string are connected in the
+        // right way
     }
 
     public static boolean isHoundWin(String[] players, int dim) {
@@ -117,33 +118,40 @@ public class FoxHoundUtils {
                 allKeysPos++;
             }
         }
+        // generate all possible moves
         String[] rightMoves = new String[4];
         int index = 0;
         for (String key : allKeys) {
-
             if (checkMoves(players[players.length - 1], key)) {
                 rightMoves[index] = key;
                 index++;
             }
-
         }
+        // get all possible moves for the certain player.
+        // is the keyboard surrounding it
 
         for (int i = 0; i < rightMoves.length; i++) {
             if (rightMoves[i] == null) {
                 rightMoves[i] = "00";
             }
-
         }
+        // put the 00 instead of null
+        // for error handling
+
         boolean flag = false;
         for (String key : rightMoves) {
             flag = flag || isValidMove(dim, players, 'F', players[players.length - 1], key);
 
         }
+
+        // if fox is completely surrounded by hounds
+        // fox cannot go anywhere
         return !flag;
     }
 
     public static boolean isFoxWin(String foxPosition) {
         return foxPosition.charAt(1) == '1';
+        // if the fox goes to the ending line
     }
 
     public static int searchKeyNum(String[] keys, String key) {
@@ -154,6 +162,7 @@ public class FoxHoundUtils {
             }
         }
         return flag;
+        // helper function to find how many same keys exist, return number of same keys
     }
 
     public static int searchKey(String[] keys, String key) {
@@ -165,5 +174,8 @@ public class FoxHoundUtils {
             flag++;
         }
         return -1;
+        // helper function to find the position of same keys exist, return first same
+        // keys's position
+
     }
 }
