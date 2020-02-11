@@ -3,10 +3,6 @@ package pk;
 import java.util.Scanner;
 import java.util.Objects;
 import java.util.Arrays;
-
-import java.io.File;
-import java.io.UncheckedIOException;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 

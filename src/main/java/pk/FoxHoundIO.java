@@ -18,23 +18,17 @@ public class FoxHoundIO {
     public static Boolean saveGame(String[] player, char fh, Path path) {
         if (player.length != 5) {
             throw new IllegalArgumentException();
+
         }
-        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        String[] validKeys = new String[32];
-        int index = 0;
-        for (int i = 1; i < 8; i = i + 2) {
-            for (int j = 0; j < 8; j++) {
-                String theString = alphabet.charAt(i) + "" + String.valueOf(j);
-                validKeys[index] = theString;
-                index++;
-            }
-        }
+        String[] validKeys = { "B1", "D1", "F1", "H1", "A2", "C2", "E2", "G2", "B3", "D3", "F3", "H3", "A4", "C4", "E4",
+                "G4", "B5", "D5", "F5", "H5", "A6", "C6", "E6", "G6", "B7", "D7", "F7", "H7", "A8", "C8", "E8", "G8", };
+
         // get all possible positions
         if (fh != 'F' && fh != 'H') {
             return false;
         }
         for (String thePlayer : player) {
-            if (FoxHoundUtils.searchKey(player, thePlayer) < 0) {
+            if (FoxHoundUtils.searchKey(validKeys, thePlayer) < 0) {
                 return false;
             }
         }
@@ -54,7 +48,6 @@ public class FoxHoundIO {
                 Files.createFile(path);
                 Files.write(path, bytes);
             } catch (IOException e) {
-                e.printStackTrace();
                 return false;
             }
 
@@ -66,25 +59,48 @@ public class FoxHoundIO {
     // unfinished---------------------------------------------------------------------------
     public static char loadGame(String[] player, Path path) {
 
+        String[] validKeys = { "B1", "D1", "F1", "H1", "A2", "C2", "E2", "G2", "B3", "D3", "F3", "H3", "A4", "C4", "E4",
+                "G4", "B5", "D5", "F5", "H5", "A6", "C6", "E6", "G6", "B7", "D7", "F7", "H7", "A8", "C8", "E8", "G8", };
+
         if (Files.exists(path.toAbsolutePath())) {
             try {
                 byte[] bytes = Files.readAllBytes(path);
                 String text = new String(bytes);
-                System.out.println(text);
-                player[0] = text.charAt(2) + "" + text.charAt(3);
-                player[1] = text.charAt(5) + "" + text.charAt(6);
-                player[2] = text.charAt(8) + "" + text.charAt(9);
-                player[3] = text.charAt(11) + "" + text.charAt(12);
-                player[4] = text.charAt(14) + "" + text.charAt(15);
+                String[] newPlayer = text.split(" ");
+                if ((text.charAt(0) != 'F') && (text.charAt(0) != 'H')) {
+                    return '#';
+                }
+                if (player.length != 5){
+                    throw new IllegalArgumentException();
+                }
+                if ((newPlayer.length != 6) ) {
+
+                    return '#';
+                }
+                // check the wrong dim
+                for (int i = 1; i < newPlayer.length; i++) {
+                    if ((FoxHoundUtils.searchKey(validKeys, newPlayer[i]) < 0)) {
+                        return '#';
+                    }
+                }
+                for(String theString: player){
+                    if (FoxHoundUtils.searchKey(validKeys, theString)<0){
+                        throw new IllegalArgumentException();
+                    }
+                }
+                // check each key is on the right possible position
+                for (int i = 1; i < newPlayer.length; i++) {
+                    player[i - 1] = newPlayer[i];
+                }
                 return text.charAt(0);
 
             } catch (IOException e) {
-                e.printStackTrace();
+                // e.printStackTrace();
                 return '#';
             }
 
         } else {
-            //throw new IllegalArgumentException(path.toAbsolutePath().toString());
+            // throw new IllegalArgumentException(path.toAbsolutePath().toString());
             return '#';
         }
 
