@@ -70,6 +70,7 @@ public class FoxHoundIO {
             try {
                 byte[] bytes = Files.readAllBytes(path);
                 String text = new String(bytes);
+                System.out.println(text);
                 player[0] = text.charAt(2) + "" + text.charAt(3);
                 player[1] = text.charAt(5) + "" + text.charAt(6);
                 player[2] = text.charAt(8) + "" + text.charAt(9);
@@ -83,8 +84,8 @@ public class FoxHoundIO {
             }
 
         } else {
+            //throw new IllegalArgumentException(path.toAbsolutePath().toString());
             return '#';
-
         }
 
     }
