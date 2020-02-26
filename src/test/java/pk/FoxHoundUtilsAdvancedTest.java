@@ -14,20 +14,21 @@ public class FoxHoundUtilsAdvancedTest {
 
     @Before
     public void setup() {
-        defaultPlayers = new String[]{"B1","D1","F1","H1","E8"};
+        defaultPlayers = new String[] { "B1", "D1", "F1", "H1", "E8" };
     }
 
     // ------------------------- initialisePositions --------------------
 
     /**
-     *  Set hound coordinates and allocate one extra for the fox
-     *  which is kept at null.
+     * Set hound coordinates and allocate one extra for the fox which is kept at
+     * null.
      * 
-     *  @param dimension dimension of the board
-     *  @return string array with hound positions in board coordinates and one extra field for the fox
+     * @param dimension dimension of the board
+     * @return string array with hound positions in board coordinates and one extra
+     *         field for the fox
      */
     private String[] setHounds(int dimension) {
-        String[] hounds = new String[dimension /  2 + 1];
+        String[] hounds = new String[dimension / 2 + 1];
         char column = 'B';
         for (int i = 0; i < hounds.length - 1; i++) {
             hounds[i] = column + "1";
@@ -38,8 +39,7 @@ public class FoxHoundUtilsAdvancedTest {
 
     private void setFox(String[] players, int dim) {
         int foxStartCol = (dim / 2) + (dim % 2) - ((dim / 2) % 2);
-        players[players.length - 1] = 
-            (char)('A' + foxStartCol) + Integer.toString(dim);
+        players[players.length - 1] = (char) ('A' + foxStartCol) + Integer.toString(dim);
     }
 
     private void checkInitPositions(int dimension) {
@@ -47,14 +47,14 @@ public class FoxHoundUtilsAdvancedTest {
         setFox(expected, dimension);
 
         String[] result = FoxHoundUtils.initialisePositions(dimension);
-        
+
         if (DEBUG) {
             System.out.println("=========================");
             System.out.println("E: " + Arrays.toString(expected));
             System.out.println("A: " + Arrays.toString(result));
         }
         assertNotNull("Returned position array not expected to be null.", result);
-        
+
         assertArrayEquals("Returned positions not as expected for dimension " + dimension, expected, result);
     }
 
@@ -73,7 +73,7 @@ public class FoxHoundUtilsAdvancedTest {
         for (int dim = FoxHoundUtils.MIN_DIM; dim < FoxHoundUtils.MAX_DIM; dim++) {
             if (dim % 2 != 0 && (dim / 2) % 2 == 0)
                 checkInitPositions(dim);
-        }       
+        }
     }
 
     @Test
@@ -81,7 +81,7 @@ public class FoxHoundUtilsAdvancedTest {
         for (int dim = FoxHoundUtils.MIN_DIM; dim < FoxHoundUtils.MAX_DIM; dim++) {
             if (dim % 2 != 0 && (dim / 2) % 2 != 0)
                 checkInitPositions(dim);
-        }       
+        }
     }
 
     @Test
@@ -89,7 +89,7 @@ public class FoxHoundUtilsAdvancedTest {
         for (int dim = FoxHoundUtils.MIN_DIM; dim < FoxHoundUtils.MAX_DIM; dim++) {
             if (dim % 2 == 0 && (dim / 2) % 2 == 0)
                 checkInitPositions(dim);
-        }       
+        }
     }
 
     @Test
@@ -97,7 +97,7 @@ public class FoxHoundUtilsAdvancedTest {
         for (int dim = FoxHoundUtils.MIN_DIM; dim < FoxHoundUtils.MAX_DIM; dim++) {
             if (dim % 2 == 0 && (dim / 2) % 2 != 0)
                 checkInitPositions(dim);
-        }       
+        }
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -159,90 +159,79 @@ public class FoxHoundUtilsAdvancedTest {
     @Test
     public void testIsHoundWinPositiveWallBlockLeft() {
         int dimension = FoxHoundUtils.DEFAULT_DIM;
-       /* .H...
-        * F....
-        * .H...
-        */
+        /*
+         * .H... F.... .H...
+         */
         defaultPlayers[1] = "B3";
         defaultPlayers[4] = "A2";
 
         boolean result = FoxHoundUtils.isHoundWin(defaultPlayers, dimension);
 
-        assertTrue("Hounds are expected to win in given positions: " + 
-                        Arrays.toString(defaultPlayers), result);
+        assertTrue("Hounds are expected to win in given positions: " + Arrays.toString(defaultPlayers), result);
     }
 
     @Test
     public void testIsHoundWinPositiveWallBlockRight() {
         int dimension = FoxHoundUtils.DEFAULT_DIM;
-       /* ...H. 
-        * ....F 
-        * ...H. 
-        */
+        /*
+         * ...H. ....F ...H.
+         */
         defaultPlayers[3] = "G2";
         defaultPlayers[2] = "G4";
         defaultPlayers[4] = "H3";
 
         boolean result = FoxHoundUtils.isHoundWin(defaultPlayers, dimension);
 
-        assertTrue("Hounds are expected to win in given positions: " + 
-                        Arrays.toString(defaultPlayers), result);
+        assertTrue("Hounds are expected to win in given positions: " + Arrays.toString(defaultPlayers), result);
 
     }
 
     @Test
     public void testIsHoundWinPositiveWallBlockBottom() {
         int dimension = FoxHoundUtils.DEFAULT_DIM;
-       /* ..... 
-        * .H.H. 
-        * ..F.. 
-        */
+        /*
+         * ..... .H.H. ..F..
+         */
         defaultPlayers[1] = "D7";
         defaultPlayers[2] = "F7";
 
         boolean result = FoxHoundUtils.isHoundWin(defaultPlayers, dimension);
 
-        assertTrue("Hounds are expected to win in given positions: " + 
-                        Arrays.toString(defaultPlayers), result);
+        assertTrue("Hounds are expected to win in given positions: " + Arrays.toString(defaultPlayers), result);
     }
 
     @Test
     public void testIsHoundWinPositiveCornerBlockBottomLeft() {
         int dimension = FoxHoundUtils.DEFAULT_DIM;
-       /* ..... 
-        * .H... 
-        * F.... 
-        */
+        /*
+         * ..... .H... F....
+         */
         defaultPlayers[1] = "B7";
         defaultPlayers[4] = "A8";
 
         boolean result = FoxHoundUtils.isHoundWin(defaultPlayers, dimension);
 
-        assertTrue("Hounds are expected to win in given positions: " + 
-                        Arrays.toString(defaultPlayers), result);
+        assertTrue("Hounds are expected to win in given positions: " + Arrays.toString(defaultPlayers), result);
     }
-
 
     @Test
     public void testIsHoundWinPositiveNonDefaultDim() {
-        String[] players = {"C8","E8","G8","C10","E10","D9"};
+        String[] players = { "C8", "E8", "G8", "C10", "E10", "D9" };
         int dimension = 10;
 
         boolean result = FoxHoundUtils.isHoundWin(players, dimension);
 
-        assertTrue("Hounds are expected to win in given positions: " + 
-                        Arrays.toString(players), result);
+        assertTrue("Hounds are expected to win in given positions: " + Arrays.toString(players), result);
     }
 
     @Test
     public void testIsHoundWinNegativeNonDefaultDim() {
-        String[] players = {"B1","D1","F1","H1","J1","E10"};
+        String[] players = { "B1", "D1", "F1", "H1", "J1", "E10" };
         int dimension = 10;
 
         boolean result = FoxHoundUtils.isHoundWin(players, dimension);
 
-        assertFalse("Hounds are not expected to win in given positions: " + 
-                        Arrays.toString(players), result);
+        assertFalse("Hounds are not expected to win in given positions: " + Arrays.toString(players), result);
     }
 
     @Test(expected = NullPointerException.class)
@@ -308,39 +297,38 @@ public class FoxHoundUtilsAdvancedTest {
 
         boolean result = FoxHoundUtils.isValidMove(dim, players, figure, origin, dest);
 
-        String message = "Move (" + origin + " " + dest + 
-        ") is expected to be " + (expected ? "" : "in") + 
-        "valid for setup: " + Arrays.toString(players);
-        
+        String message = "Move (" + origin + " " + dest + ") is expected to be " + (expected ? "" : "in")
+                + "valid for setup: " + Arrays.toString(players);
+
         if (expected)
-            assertTrue(message, result);    
+            assertTrue(message, result);
         else
-            assertFalse(message, result);    
+            assertFalse(message, result);
     }
 
     @Test
     public void testIsValidMovePositiveNonDefaultDimension() {
         int dim = 10;
-        String[] players = {"B1", "D1", "F1", "H1", "J1", "E10"};
+        String[] players = { "B1", "D1", "F1", "H1", "J1", "E10" };
         char figure = FoxHoundUtils.FOX_FIELD;
         String origin = players[players.length - 1];
         String dest = "F9"; // move fox up
 
         checkMove(dim, players, figure, origin, dest, true);
 
-        players = new String[]{"B1", "D1", "F1", "H1", "J1", "E10"};
+        players = new String[] { "B1", "D1", "F1", "H1", "J1", "E10" };
         figure = FoxHoundUtils.HOUND_FIELD;
         origin = players[4];
         dest = "I2"; // move hound down
 
         checkMove(dim, players, figure, origin, dest, true);
 
-        players = new String[]{"B1", "D1", "F1", "H1", "J1", "J9"};
+        players = new String[] { "B1", "D1", "F1", "H1", "J1", "J9" };
         figure = FoxHoundUtils.FOX_FIELD;
         origin = players[players.length - 1];
         dest = "I10"; // move fox down
 
-        checkMove(dim, players, figure, origin, dest, true); 
+        checkMove(dim, players, figure, origin, dest, true);
     }
 
     @Test
@@ -354,15 +342,14 @@ public class FoxHoundUtilsAdvancedTest {
 
         checkMove(dim, players, figure, origin, dest, false);
 
-        players = new String[]{"B1","D1","F1","H1","E8"};
+        players = new String[] { "B1", "D1", "F1", "H1", "E8" };
         figure = FoxHoundUtils.HOUND_FIELD;
         origin = players[1];
         dest = "F3"; // move hound down too far
 
         checkMove(dim, players, figure, origin, dest, false);
 
-
-        players = new String[]{"B1","D1","F1","H1","D5"};
+        players = new String[] { "B1", "D1", "F1", "H1", "D5" };
         figure = FoxHoundUtils.FOX_FIELD;
         origin = players[players.length - 1];
         dest = "B7"; // move fox down too far
@@ -541,7 +528,6 @@ public class FoxHoundUtilsAdvancedTest {
 
         FoxHoundUtils.isValidMove(dim, players, figure, origin, dest);
     }
-
 
     @Test(expected = IllegalArgumentException.class)
     public void testIsValidMoveInvalidBoardSetup() {
